@@ -96,9 +96,20 @@ end
 
 describe 'Searchable' do
   let(:nodes) { ('a'..'g').map { |value| PolyTreeNode.new(value) } }
+  #nodes = [PolyTreeNode.new(a), => root
+  # PolyTreeNode.new(b), =>parent = PolyTreeNode.new(a)
+  # PolyTreeNode.new(c), =>parent = PolyTreeNode.new(a)
+  # PolyTreeNode.new(d), =>parent = PolyTreeNode.new(b)
+  # PolyTreeNode.new(e), =>parent = PolyTreeNode.new(b)
+  # PolyTreeNode.new(f), =>parent = PolyTreeNode.new(c)
+  # PolyTreeNode.new(g)] =>parent = PolyTreeNode.new(c)
+    #       A
+    #   B      C
+    # d  e   f[5]  g
+
 
   before do
-    parent_index = 0
+    parent_index = 0 #1
     nodes.each_with_index do |child, index|
       next if index.zero?
       child.parent = nodes[parent_index]
