@@ -38,21 +38,42 @@ class Pos
        nil
     end
     
-    def bfs(target_value) 
-        queue = [self] #=> check to see if self has children, then add
-        until queue.empty?
-            current_node = queue.shift
-           if current_node.value == target_value #evaluates to self.value
-                return current_node
-           else
-                queue += current_node.children
-           end
-        end 
+    # def bfs(target_value) #[7,6]
+        # queue = [self] #=> check to see if self has children, then add
+        # until queue.empty?
+        #     current_node = queue.shift
+        #    if current_node.value == target_value #evaluates to self.value
+        #         return current_node
+        #    else
+        #         queue += current_node.children
+        #    end
+        # end 
+        # nil
+    # end
+
+    def bfs(target)
+        nodes = [self]
+        until nodes.empty?
+            node = nodes.shift
+            return node if node.value == target
+            nodes.concat(node.children)
+        end
         nil
     end
 
-    def inspect
-        @value.inspect
-    end
+    # def inspect
+    #     @value.inspect
+    # end
 end
 
+
+def bfs(target = nil, &prc)
+    nodes = [self]
+    until nodes.empty?
+      node = nodes.shift
+
+      return node if node.value == target
+      nodes.concat(node.children)
+    end
+    nil
+  end
