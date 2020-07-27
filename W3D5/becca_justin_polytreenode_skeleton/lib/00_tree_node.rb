@@ -48,28 +48,27 @@ class PolyTreeNode
     #  A
     # B C 
     #d  e f
-    def bfs(target_value) #=> e
-        queue = [self] #=> [self(A), B, C, d, e, f, g
+    def bfs(target_value) 
+        queue = [self] #=> check to see if self has children, then add
         
-        # queue.select! { |child|  child.children if !child.children.empty? }
-        # queue.sort_by! {|child1, child2| child1.children.length > child2.children.length}
-
-        queue.each {|child| return child if child.value == target_value }
+        until queue.empty?
+            current_node = queue.shift
+           if current_node.value == target_value #evaluates to self.value
+                return current_node
+           else
+                queue += current_node.children
+           end
+        end 
+        
         nil
     end
 end
 
 
         # def bfs take 1
-        # until queue.empty?
-        #    if queue[0].value == target_value #evaluates to self.value
-        #         return queue.unshift
-        #    else
-        #         queue += queue.unshift.children
-        #    end
-        # end
-        # nil
-
+        # queue.select! { |child|  child.children if !child.children.empty? }
+        # queue.sort_by! {|child1, child2| child1.children.length > child2.children.length}
+        # queue.each {|child| return child if child.value == target_value }
 
 root = PolyTreeNode.new("root")
 child1 = PolyTreeNode.new("c2")
