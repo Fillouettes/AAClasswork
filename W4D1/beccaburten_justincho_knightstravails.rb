@@ -21,14 +21,22 @@ class KnightPathFinder # find shortest path from a starting position to an end p
         g = [x-1, y-2] 
         h = [x+1, y-2]
         valid_moves = [a, b, c, d, e, f, g, h]
-        valid_moves.select! { |pos| pos.none? { |i| i < 0 || i > 7 }}
+        if valid_moves.nil?
+            debugger
+        end
+        selected = valid_moves.select! { |pos| pos.none? { |i| i < 0 || i > 7 }}
+        if selected.nil?
+            return valid_moves 
+        else 
+            selected
+        end
     end
 
     def new_move_positions(pos)
        new_moves = KnightPathFinder.valid_moves(pos)
        new_moves.select! {|move| !@considered_positions.include?(move)}
         # ^ calls self.valid_moves, filters out positions in @considered_positions
-       @considered_positions += new_move
+       @considered_positions += new_moves
         # ^ add remaining new positions: @considered_positions 
        new_moves
         # ^ return these new positions as a 2D Array
@@ -46,17 +54,19 @@ class KnightPathFinder # find shortest path from a starting position to an end p
                 child = Pos.new(child_pos)
                 child.parent = @root_node
                 queue << child
+                p child
             end
         end
         @root_node
     end
+
     # CHECK: load this in pry and then look at root node
 
 end
 
 kpf = KnightPathFinder.new([0,0])
-p kpf.new_move_positions([2,1])
-# kpf.build_move_tree
+#p kpf.new_move_positions([2,1])
+p kpf.build_move_tree
 
 
 
