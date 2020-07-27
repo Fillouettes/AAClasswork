@@ -1,8 +1,8 @@
  
-class PolyTreeNode
-    attr_reader :children, :position, :parent
-    def initialize(position)
-        @position = position 
+class Pos
+    attr_reader :children, :value, :parent
+    def initialize(value)
+        @value = value 
         @parent = nil #once there is a parent to assign, it will be a PolyTreeNode instance
         @children = []
     end
