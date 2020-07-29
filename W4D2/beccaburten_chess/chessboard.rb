@@ -34,7 +34,7 @@ class Board
       
       #PLACE KINGS :K
       self[[0, 4]] = King.new(:black, self, [0,4])
-      self[[7, 4]] = King.new(:black, self, [7,4])
+      self[[7, 4]] = King.new(:white, self, [7,4])
       
       #PLACE PAWNS :P 
       @rows[1].map!.with_index {|ele, i| ele = Pawn.new(:black, self, [1,i])}
