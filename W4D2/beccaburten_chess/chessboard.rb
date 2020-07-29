@@ -1,11 +1,7 @@
 require_relative "piece.rb"
 
-class Board
 
-    #CLASS METHOD (in UML as instance method)
-   def self.valid_pos?(pos) #pos example: [2,8]
-       pos.none?{|i| i > 7 || i < 0}
-   end
+class Board
 
    def initialize() #2D array
       @sentinel = NullPiece.instance #(do we use .new for a singleton class?)
@@ -15,30 +11,39 @@ class Board
 
    def place_pieces
       #PLACE ROOKS :R
-      @rows[0, 0], @rows[0, 7] = Rook.new(:black, self, [0,0]), Rook.new([0,7])
-      @rows[7, 0], @rows[7, 7] = Rook.new(:white, self, [7,0]), Rook.new(:white, self, [7,7])
-      
+      self[[0, 0]] = Rook.new(:black, self, [0,0])
+      self[[0, 7]] = Rook.new(:black, self, [0,7])
+      self[[7, 0]] = Rook.new(:white, self, [7,0]) 
+      self[[7, 7]] = Rook.new(:white, self, [7,7])
+
       #PLACE KNIGHTS :N
-      @rows[0, 1], @rows[0, 6] = Knight.new(:black, self, [0,1]), Knight.new(:black, self, [0,6])
-      @rows[7, 1], @rows[7, 6] = Knight.new(:white, self, [7,1]), Knight.new(:white, self, [7,6])
+      self[[0, 1]] = Knight.new(:black, self, [0,1])
+      self[[0, 6]] = Knight.new(:black, self, [0,6])
+      self[[7, 1]] = Knight.new(:white, self, [7,1])
+      self[[7, 6]] = Knight.new(:white, self, [7,6])
       
       #PLACE BISHOPS :B
-      @rows[0,2], @rows[0, 5] = Bishop.new(:black, self, [0,2]), Bishop.new(:black, self, [0,5])
-      @rows[7, 2], @rows[7, 5] = Bishop.new(:white, self, [7,2]), Bishop.new(:white, self, [7,5])
-       
+      self[[0, 2]] = Bishop.new(:black, self, [0,2])
+      self[[0, 5]] = Bishop.new(:black, self, [0,5])
+      self[[7, 2]] = Bishop.new(:white, self, [7,2])
+      self[[7, 5]] = Bishop.new(:white, self, [7,5])
+
       #PLACE QUEENS :Q
-      @rows[0,3] = Queen.new(:black, self, [0,3])
-      @rows[7,3] = Queen.new(:white, self, [7,3])
+      self[[0, 3]] = Queen.new(:black, self, [0,3])
+      self[[7, 3]] = Queen.new(:white, self, [7,3])
       
       #PLACE KINGS :K
-      @rows[0,4] = King.new(:black, self, [0,4])
-      @rows[7,4] = King.new(:black,self, [7,4])
+      self[[0, 4]] = King.new(:black, self, [0,4])
+      self[[7, 4]] = King.new(:black, self, [7,4])
       
       #PLACE PAWNS :P 
-      @rows[1].map_with_index! do {|ele, i| ele = Pawn.new(:black, self,[1,i])}
-      @rows[6].map_with_index! do {|ele, i| ele = Pawn.new(:white, self,[6,i])}
+      @rows[1].map!.with_index {|ele, i| ele = Pawn.new(:black, self, [1,i])}
+      @rows[6].map!.with_index {|ele, i| ele = Pawn.new(:white, self, [6,i])}
    end
 
+   def valid_pos?(pos) #pos example: [2,8]
+       pos.none?{|i| i > 7 || i < 0}
+   end
 
    def [](pos) #pos will be [i1, i2]
         i1, i2 = pos
@@ -72,6 +77,17 @@ end
 
 
 #every spot in the grid ALWAYS has a piece instance in it
+
+   # [R, N, B, Q, K, B, N, R],
+   # [P, P, P, P, P, P, P, P],
+   # [ ,  ,  ,  ,  ,  ,  ,  ],
+   # [ ,  ,  ,  ,  ,  ,  ,  ],
+   # [ ,  ,  ,  ,  ,  ,  ,  ],
+   # [ ,  ,  ,  ,  ,  ,  ,  ],
+   # [P, P, P, P, P, P, P, P],
+   # [R, N, B, Q, K, B, N, R]
+
+
 
     #    0 1 2 3 4 5 6 7
     # 0 [0,0,0,0,0,0,0,0] << Piece.new

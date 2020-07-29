@@ -2,24 +2,30 @@ require "singleton"
 
 class Piece
 
+    attr_reader :color, :board
+    attr_accessor :pos
+
     #needs to track position (getter and setter)
-    #needs to reference Board
    def initialize(color, board, pos) #piece type
-    # @color: symbol
-    # @board: Board... ?
-    # @pos = [ ]
+        @color = color
+        @board = board
+        @pos = pos
    end
 
    def valid_moves
     #moves = [ ] returns array of places piece can move to (depends on piece type due to overwritten .move_dirs)
      # TA says this takes from our subclass moves array ("Rook can't go diagonal")
-     .moves
+        self.moves
+   end
+
+   def inspect
+        self.symbol #.inspect
    end
 
 end
 
 class NullPiece < Piece
-    include singleton #singleton piece: How do we store position on board, if board contains /copies/ of one piece?
+    include Singleton #singleton piece: How do we store position on board, if board contains /copies/ of one piece?
                         #not copies, just references, so each pos we reassign with reference to Null if we've moved a piece and now its empty
                         #but our piece contains it's own position, does it not?
                         #what if nullpiece contains a 2d array of all positions it is at, instead of a 1d position, like other pieces? Or it could default return an empty array?
@@ -39,6 +45,10 @@ class NullPiece < Piece
         return nil
     end
 end
+
+require_relative "./sliding_pieces.rb"
+require_relative "./stepping_pieces.rb"
+require_relative "pawn"
 
 # start_pos [i1][i2] 
 # directions for forward => [i1 +- 1][i2]

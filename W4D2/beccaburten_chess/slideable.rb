@@ -36,15 +36,18 @@ module Slideable  #QUEEN, ROOK, BISHOP
       next_pos = self.pos #[3,3] + -1,-1 <<<current_pos will be a variable in QUEEN class
       next_pos = [(self.pos[0] + dx), (self.pos[1] + dy)]
       until !@board.valid_pos?(next_pos) #until we fall off board...keep going
-         if @board[next_pos].color != self.color && @board[next_pos].color != nil #check! is it a NullPiece or opponent piece?
+         if (@board[next_pos].color != self.color) && (@board[next_pos].color != nil) #check is it an opponent piece? (not our piece or NullPiece)
             #this means its our opponent's piece
             path_in_this_direction << next_pos
             break
          end
-         break if @board[next_pos].color == self.color #check if pos has OUR OWN piece, can't move past it
-         path_in_this_direction << next_pos 
-         next_pos[0] += dx
-         next_pos[1] += dy
+        if @board[next_pos].color == self.color #check if pos has OUR OWN piece, can't move past it
+            break
+        end
+          path_in_this_direction << next_pos 
+          new_x = next_pos[0] + dx            # NOTE: do NOT >>mutate<< the next_pos by reassigning indices
+          new_y = next_pos[1] + dy
+          next_pos = [new_x, new_y]           # MUST >>reassign<< next_pos with new indices
       end
       return path_in_this_direction #< array of possible moves you can take in one sliding direction until you hit a piece / end of board
     end
