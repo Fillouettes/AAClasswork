@@ -4,17 +4,16 @@ class Piece
 
     #needs to track position (getter and setter)
     #needs to reference Board
-   def initialize(pos) #piece type
-
+   def initialize(color, board, pos) #piece type
+    # @color: symbol
+    # @board: Board... ?
+    # @pos = [ ]
    end
 
    def valid_moves
-    #we should check our valid_pos in Board?
-    # TA says this takes from our subclass moves array ("Rook can't go diagonal")
-   end
-
-   def moves
-    #moves = [ ] returns array of places piece can move to (depends on piece type)
+    #moves = [ ] returns array of places piece can move to (depends on piece type due to overwritten .move_dirs)
+     # TA says this takes from our subclass moves array ("Rook can't go diagonal")
+     .moves
    end
 
 end

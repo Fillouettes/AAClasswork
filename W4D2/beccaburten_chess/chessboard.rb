@@ -8,39 +8,36 @@ class Board
    end
 
    def initialize() #2D array
-      @rows = Array.new(8) {Array.new(8)} #empty 2D array, nil placeholders
       @sentinel = NullPiece.instance #(do we use .new for a singleton class?)
-
+      @rows = Array.new(8) {Array.new(8, @sentinel)} #empty 2D array, nil placeholders
       self.place_pieces #puts placeholder Piece instances
    end
 
    def place_pieces
-      @rows.each_with_index do |row, i1|
-        # row.each_with_index do |ele, i2| 
-        #         @rows[i1][i2] = Piece.new([i1,i2])
-         case i1 == n
-                        
-            when n == 0
-               
-            when n == 1 
-               
-            when n == 6
-               
-            when n == 7
-
-            end
-         end
-      end
+      #PLACE ROOKS :R
+      @rows[0, 0], @rows[0, 7] = Rook.new(:black, self, [0,0]), Rook.new([0,7])
+      @rows[7, 0], @rows[7, 7] = Rook.new(:white, self, [7,0]), Rook.new(:white, self, [7,7])
+      
+      #PLACE KNIGHTS :N
+      @rows[0, 1], @rows[0, 6] = Knight.new(:black, self, [0,1]), Knight.new(:black, self, [0,6])
+      @rows[7, 1], @rows[7, 6] = Knight.new(:white, self, [7,1]), Knight.new(:white, self, [7,6])
+      
+      #PLACE BISHOPS :B
+      @rows[0,2], @rows[0, 5] = Bishop.new(:black, self, [0,2]), Bishop.new(:black, self, [0,5])
+      @rows[7, 2], @rows[7, 5] = Bishop.new(:white, self, [7,2]), Bishop.new(:white, self, [7,5])
+       
+      #PLACE QUEENS :Q
+      @rows[0,3] = Queen.new(:black, self, [0,3])
+      @rows[7,3] = Queen.new(:white, self, [7,3])
+      
+      #PLACE KINGS :K
+      @rows[0,4] = King.new(:black, self, [0,4])
+      @rows[7,4] = King.new(:black,self, [7,4])
+      
+      #PLACE PAWNS :P 
+      @rows[1].map_with_index! do {|ele, i| ele = Pawn.new(:black, self,[1,i])}
+      @rows[6].map_with_index! do {|ele, i| ele = Pawn.new(:white, self,[6,i])}
    end
-
-   #rows 0 and 7: 
-   #  rook: board[0][0],board[0][7], board[7][0], board[7][7] 
-   #  knight: board[0][1], board[0][6], board[7][1], board[7][6]
-   #  bishop: bishop[0][2], board[0][5], board[7][2], board[7][5]
-   #  queen: board[0][3], board[7][3]
-   #  king: board[0][4], board[7][4]
-   #  >>board[1] and board[6]: 
-   #  pawns: board[1][0..7], board[6][0..7]
 
 
    def [](pos) #pos will be [i1, i2]

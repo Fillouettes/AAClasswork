@@ -1,7 +1,4 @@
 module Slideable  #QUEEN, ROOK, BISHOP
-    HORIZONTAL_DIRS = [[-1,0], [1,0], [0,-1], [0,1]]
-    DIAGONAL_DIRS = [[-1,-1], [1,1], [1,-1], [-1,1]]
-
     def horizontal_dirs
          HORIZONTAL_DIRS
          #to generate array of potential horizontal moves from GIVEN position
@@ -14,17 +11,22 @@ module Slideable  #QUEEN, ROOK, BISHOP
     end
 
     def moves #WHAT IS SELF? -->instance of piece
-        directions = self.move_dirs #move_dirs is method call
+        directions = move_dirs #move_dirs is method call
         #call move-dirs, get directions = [[-1][-1], [1,1], [1][-1], [-1][1], [-1,0], [1,0], [0][-1], [0][1]]
         moves = [ ] #all possible pos for piece to land on
         directions.each do |inc| #[1,2]inc = incremental move by row, col
-            moves += self.grow_unblocked_moves_in_dir(*inc) #HELPER method below
+            moves += grow_unblocked_moves_in_dir(*inc) #HELPER method below
         end
         return moves
     end
 
+    private 
+
+    HORIZONTAL_DIRS = [[-1,0], [1,0], [0,-1], [0,1]]
+    DIAGONAL_DIRS = [[-1,-1], [1,1], [1,-1], [-1,1]]
+
     def move_dirs #overwritten by subclass QUEEN
-      raise "not implemented" #NotImplementedError ^upvote
+      raise NotImplementedError 
       #return horizontal_dirs + diagonal_dirs: [[-1][-1], [1][1], [1][-1], [-1][1], [-1,0], [1,0], [0][-1], [0][1]]
     end
 
@@ -47,3 +49,6 @@ module Slideable  #QUEEN, ROOK, BISHOP
       return path_in_this_direction #< array of possible moves you can take in one sliding direction until you hit a piece / end of board
     end
 end
+
+# class NotImplementedError < StandardError
+# end
