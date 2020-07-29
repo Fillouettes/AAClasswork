@@ -5,7 +5,7 @@ class Rook < Piece
    #overwrite valid_moves (use moves?)
 
    def symbol
-       :R
+    self.color == :white ? "♖" : "♜"
    end
 
    protected
@@ -19,7 +19,7 @@ class Bishop < Piece
     include Slideable
 
     def symbol
-        :B
+        self.color == :white ? "♗" : "♝"
     end
 
     protected
@@ -32,7 +32,7 @@ class Queen < Piece
     include Slideable
 
     def symbol
-      :Q
+      self.color == :white ? "♕" : "♛"
     end
     
    protected

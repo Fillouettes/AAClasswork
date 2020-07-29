@@ -56,9 +56,9 @@ class Board
    end
 
    def move_piece(start_pos, end_pos)
-      raise "Invalid position" if !Board.valid_pos?(start_pos) || !Board.valid_pos?(end_pos)
-      raise "There is no piece here" if @rows[start_pos].nil? #nil will actually NullPiece
-      raise "Invalid end position" if !@rows[end_pos].nil?  #this is totally wrong
+      raise "Invalid position" if !self.valid_pos?(start_pos) || !self.valid_pos?(end_pos)
+      raise "There is no piece here" if self[start_pos].nil? #nil will actually NullPiece
+      raise "Invalid end position" if self[end_pos] != @sentinel #this is totally wrong
         #if pos @end has piece that is opponent's, we CAN go << override later
         #if pos @end has piece that is ours, CANNOT go << override later
         #---> update DESTRUCTION if this move captures a piece. Does the game keep a set of captured pieces?
@@ -66,8 +66,9 @@ class Board
         #if sliding piece, and other piece is on path, CANNOT go << override later
         #end_pos CANNOT result in putting YOUR king in check 
         
-        @rows[end_pos] = @rows[start_pos] 
-        @rows[start_pos] = nil #will evenetually be NullPiece
+        self[end_pos] = self[start_pos]
+        self[end_pos].pos = end_pos
+        self[start_pos] = @sentinel #will evenetually be NullPiece
    end
 
 
