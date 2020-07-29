@@ -58,7 +58,7 @@ class Board
    def move_piece(start_pos, end_pos)
       raise "Invalid position" if !self.valid_pos?(start_pos) || !self.valid_pos?(end_pos)
       raise "There is no piece here" if self[start_pos].nil? #nil will actually NullPiece
-      raise "Invalid end position" if self[end_pos] != @sentinel #this is totally wrong
+      raise "Invalid end position" if self[end_pos].color == self[start_pos].color  #this is totally wrong
         #if pos @end has piece that is opponent's, we CAN go << override later
         #if pos @end has piece that is ours, CANNOT go << override later
         #---> update DESTRUCTION if this move captures a piece. Does the game keep a set of captured pieces?
@@ -70,12 +70,7 @@ class Board
         self[end_pos].pos = end_pos
         self[start_pos] = @sentinel #will evenetually be NullPiece
    end
-
-
-
 end
-
-
 
 #every spot in the grid ALWAYS has a piece instance in it
 
@@ -99,13 +94,3 @@ end
     # 5 [0,0,0,0,0,0,0,0]
     # 6 [0,0,0,0,0,0,0,0] <<Piece.new
     # 7 [0,0,0,0,0,0,0,0] <<Piece.new
-
-# note: cursor class is provided, use this
-# chance to practice reading their code/API
-
-
-
-
-
-#Two players: each has 16 pieces:
-# eight pawns

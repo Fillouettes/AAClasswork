@@ -20,3 +20,8 @@ d = Display.new
 #options hash for background
 
 #Piece to string: piece.symbol.colorize(piece.color)
+
+#next steps:
+#finish pawn
+#render display, colorize board background and cursor
+#everything else

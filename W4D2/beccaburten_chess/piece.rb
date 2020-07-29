@@ -37,7 +37,7 @@ class NullPiece < Piece
     attr_reader :color, :symbol #UML has no color getter?
 
     def initialize
-        @color = nil
+        @color = :none
         @symbol = " "
     end
 
