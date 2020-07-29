@@ -24,7 +24,7 @@ module Slideable  #QUEEN, ROOK, BISHOP
     end
 
     def move_dirs #overwritten by subclass QUEEN
-      raise "not implemented"
+      raise "not implemented" #NotImplementedError ^upvote
       #return horizontal_dirs + diagonal_dirs: [[-1][-1], [1][1], [1][-1], [-1][1], [-1,0], [1,0], [0][-1], [0][1]]
     end
 
